@@ -21,8 +21,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 
-public class MainActivity extends AppCompatActivity implements OnMapReadyCallback
-{
+public class MainActivity extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     TextView txtlatitud,txtlongitud;
 
     private GoogleMap myMap;
@@ -32,6 +31,7 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         txtlatitud=findViewById(R.id.txtlatitud);
         txtlongitud=findViewById(R.id.txtlongitud);
 
@@ -42,29 +42,43 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
     @Override
     public void onMapReady(@NonNull GoogleMap googleMap)
     {
-
         myMap = googleMap;
-        this.myMap.setOnMapClickListener(this);
-        this.myMap.setOnMapLongClickListener(this);
+        myMap.setOnMapClickListener(this);
+        myMap.setOnMapLongClickListener(this);
 
         LatLng santa = new LatLng(-17.78629,-63.18117);
         myMap.addMarker(new MarkerOptions().position(santa).title("santa cruz puej"));
         myMap.moveCamera(CameraUpdateFactory.newLatLng(santa));
     }
+
     @Override
     public void onMapClick(@NonNull LatLng latLng)
     {
-        txtlatitud.setText(String.valueOf(latLng.latitude));
-        txtlongitud.setText(String.valueOf(latLng.longitude));
-
-        myMap.clear();
-        LatLng mexico = new LatLng(latLng.latitude,latLng.longitude);
-        myMap.addMarker(new MarkerOptions().position(mexico).title(""));
-        myMap.moveCamera(CameraUpdateFactory.newLatLng(mexico));
+        txtlatitud.setText(""+latLng.latitude);
+        txtlongitud.setText(""+latLng.longitude);
     }
 
     @Override
     public void onMapLongClick(@NonNull LatLng latLng) {
+        txtlatitud.setText(""+latLng.latitude);
+        txtlongitud.setText(""+latLng.longitude);
+    }
+
+  /*  @Override
+    public void onMapReady(@NonNull GoogleMap googleMap)
+    {
+
+        myMap = googleMap;
+        myMap.setOnMapClickListener((GoogleMap.OnMapClickListener) this);
+        myMap.setOnMapLongClickListener((GoogleMap.OnMapLongClickListener) this);
+
+        LatLng santa = new LatLng(-17.78629,-63.18117);
+        myMap.addMarker(new MarkerOptions().position(santa).title("santa cruz puej"));
+        myMap.moveCamera(CameraUpdateFactory.newLatLng(santa));
+    }
+
+    public void onMapClick(@NonNull LatLng latLng)
+    {
         txtlatitud.setText(String.valueOf(latLng.latitude));
         txtlongitud.setText(String.valueOf(latLng.longitude));
 
@@ -73,4 +87,14 @@ public class MainActivity extends AppCompatActivity implements OnMapReadyCallbac
         myMap.addMarker(new MarkerOptions().position(santa).title(""));
         myMap.moveCamera(CameraUpdateFactory.newLatLng(santa));
     }
+
+    public void onMapLongClick(@NonNull LatLng latLng) {
+        txtlatitud.setText(String.valueOf(latLng.latitude));
+        txtlongitud.setText(String.valueOf(latLng.longitude));
+
+        myMap.clear();
+        LatLng santa = new LatLng(latLng.latitude,latLng.longitude);
+        myMap.addMarker(new MarkerOptions().position(santa).title(""));
+        myMap.moveCamera(CameraUpdateFactory.newLatLng(santa));
+    } */
 }
